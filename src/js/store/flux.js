@@ -1,4 +1,4 @@
-const getState = ({ getStore, setStore }) => {
+const getState = ({ getStore, setStore, getActions }) => {
 	return {
 		store: {
 			//Your data structures, A.K.A Entities
@@ -7,6 +7,23 @@ const getState = ({ getStore, setStore }) => {
 		actions: {
 			//(Arrow) Functions that update the Store
 			// Remember to use the scope: scope.state.store & scope.setState()
+			deleteFetch: id => {
+				fetch("https://assets.breatheco.de/apis/fake/contact/" + id, {
+					method: "DELETE"
+				})
+					.then(response => {
+						if (!response.ok) {
+							throw Error(response.statusText);
+						}
+						return response.json();
+					})
+					.then(data => {
+						getActions().getFetch();
+						// confirm return of data here
+					})
+					.catch(err => console.log("There was a following error: " + err));
+			},
+
 			getFetch: () => {
 				fetch("https://assets.breatheco.de/apis/fake/contact/agenda/agenda_2021")
 					.then(response => {
@@ -39,7 +56,10 @@ const getState = ({ getStore, setStore }) => {
 						}
 						return response.json();
 					})
-					.then(data => console.log(data))
+					.then(data => {
+						getActions().getFetch();
+						// confirm return of data here
+					})
 					.catch(err => console.log("There was a following error: " + err));
 			}
 		}

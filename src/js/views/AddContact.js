@@ -1,13 +1,18 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { GlobalState } from "../store/appContext";
+import PropTypes from "prop-types";
 
-export const AddContact = () => {
-	const { StorageEvent, actions } = useContext(GlobalState);
+export const AddContact = props => {
+	const { store, actions } = useContext(GlobalState);
 	const [contact, setContact] = useState({ name: null, email: null, address: null, phone: null });
 	const handleInput = e => {
 		// console.log(e.target);
 		setContact({ ...contact, [e.target.name]: e.target.value });
+	};
+	const handleSave = () => {
+		actions.postFetch(contact);
+		props.history.push("/");
 	};
 	return (
 		<div className="container">
@@ -54,11 +59,8 @@ export const AddContact = () => {
 							placeholder="Enter address"
 						/>
 					</div>
-					<button
-						onClick={() => actions.postFetch(contact)}
-						type="button"
-						className="btn btn-primary form-control">
-						save
+					<button onClick={() => handleSave()} type="button" className="btn btn-primary form-control">
+						Save
 					</button>
 					<Link className="mt-3 w-100 text-center" to="/">
 						or get back to contacts
@@ -67,4 +69,8 @@ export const AddContact = () => {
 			</div>
 		</div>
 	);
+};
+
+AddContact.propTypes = {
+	history: PropTypes.object
 };
