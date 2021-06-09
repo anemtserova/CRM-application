@@ -11,6 +11,13 @@ export const Contacts = () => {
 		showModal: false,
 		id: "0"
 	});
+	const stateSetter = contactId => {
+		setState({ showModal: true, id: contactId });
+	};
+
+	const setModal = () => {
+		setState({ showModal: false });
+	};
 
 	return (
 		<div className="container">
@@ -24,17 +31,13 @@ export const Contacts = () => {
 					<ul className="list-group pull-down" id="contact-list">
 						{store.contacts
 							? store.contacts.map((contact, i) => (
-									<ContactCard
-										key={i}
-										entity={contact}
-										onDelete={() => setState({ showModal: true, id: contact.id })}
-									/>
+									<ContactCard key={i} entity={contact} onDelete={() => stateSetter(contact.id)} />
 							  ))
 							: "Loading..."}
 					</ul>
 				</div>
 			</div>
-			<Modal show={state.showModal} id={state.id} onClose={() => setState({ showModal: false })} />
+			<Modal show={state.showModal} id={state.id} onClose={setModal} />
 		</div>
 	);
 };

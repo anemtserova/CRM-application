@@ -5,6 +5,33 @@ const getState = ({ getStore, setStore, getActions }) => {
 			contacts: []
 		},
 		actions: {
+			editFetch: monkey => {
+				fetch("https://assets.breatheco.de/apis/fake/contact/" + monkey.id, {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						full_name: monkey.full_name,
+						email: monkey.email,
+						agenda_slug: "agenda_2021",
+						address: monkey.address,
+						phone: monkey.phone
+					})
+				})
+					.then(response => {
+						if (!response.ok) {
+							throw Error(response.statusText);
+						}
+						return response.json();
+					})
+					.then(data => {
+						getActions().getFetch();
+						// confirm return of data here
+					})
+					.catch(err => console.log("There was a following error: " + err));
+			},
+
 			//(Arrow) Functions that update the Store
 			// Remember to use the scope: scope.state.store & scope.setState()
 			deleteFetch: id => {
@@ -65,5 +92,4 @@ const getState = ({ getStore, setStore, getActions }) => {
 		}
 	};
 };
-
 export default getState;

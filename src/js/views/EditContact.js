@@ -16,6 +16,10 @@ export const EditContact = props => {
 	const handleInput = e => {
 		setEditedContact({ ...editedContact, [e.target.name]: e.target.value });
 	};
+	const handleSave = () => {
+		actions.editFetch(editedContact);
+		props.history.push("/");
+	};
 	return (
 		<div className="container">
 			<div>
@@ -65,7 +69,7 @@ export const EditContact = props => {
 							value={editedContact.address}
 						/>
 					</div>
-					<button type="button" className="btn btn-primary form-control">
+					<button onClick={handleSave} type="button" className="btn btn-primary form-control">
 						Save
 					</button>
 					<Link className="mt-3 w-100 text-center" to="/">
@@ -79,5 +83,6 @@ export const EditContact = props => {
 
 EditContact.propTypes = {
 	entity: PropTypes.object,
-	match: PropTypes.object
+	match: PropTypes.object,
+	history: PropTypes.object
 };
