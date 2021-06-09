@@ -6,7 +6,7 @@ const getState = ({ getStore, setStore, getActions }) => {
 		},
 		actions: {
 			editFetch: monkey => {
-				fetch("https://assets.breatheco.de/apis/fake/contact/" + monkey.id, {
+				fetch("https://assets.breatheco.de/apis/fake/contact/" + monkey.kite, {
 					method: "PUT",
 					headers: {
 						"Content-Type": "application/json"

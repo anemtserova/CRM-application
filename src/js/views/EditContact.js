@@ -11,7 +11,7 @@ export const EditContact = props => {
 		email: contact.email,
 		address: contact.address,
 		phone: contact.phone,
-		id: contact.id
+		kite: contact.id
 	});
 	const handleInput = e => {
 		setEditedContact({ ...editedContact, [e.target.name]: e.target.value });
